@@ -58,19 +58,19 @@ Building a client
 Screenshots
 ---
 <div class="container">
-    <img src="https://i.imgur.com/AuGuPrQ.png" height="400" width="600" />    
+    <img src="https://i.imgur.com/AuGuPrQ.png" height="400" width="700" />    
 </div>
 <div class="container">
-    <img src="https://i.imgur.com/DNQCQN8.png" height="400" width="600" />    
+    <img src="https://i.imgur.com/DNQCQN8.png" height="400" width="700" />    
 </div>
 <div class="container">
-    <img src="https://i.imgur.com/SLB5TBi.png" height="400" width="600" />    
+    <img src="https://i.imgur.com/SLB5TBi.png" height="400" width="700" />    
 </div>
 <div class="container">
-    <img src="https://i.imgur.com/q1N7pRe.png" height="400" width="600" />    
+    <img src="https://i.imgur.com/q1N7pRe.png" height="400" width="700" />    
 </div>
 <div class="container">
-    <img src="https://i.imgur.com/8UlPVHq.png" height="400" width="600" />    
+    <img src="https://i.imgur.com/8UlPVHq.png" height="400" width="700" />    
 </div>
  
 ToDo
