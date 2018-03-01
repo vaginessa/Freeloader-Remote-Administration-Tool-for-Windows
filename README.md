@@ -73,11 +73,11 @@ Screenshots
     <img src="https://i.imgur.com/8UlPVHq.png" height="200" width="200" />    
  </div>
  
- <style>
+ ```css
     div.container {
       display:inline-block;
     }
-  </style>
+  ```
 
 ToDo
 ---
