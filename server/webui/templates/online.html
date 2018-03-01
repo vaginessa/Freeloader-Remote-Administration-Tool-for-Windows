@@ -1,0 +1,7 @@
+<td><a href="#" onclick="changeName('{{agent.id}}', '{{agent.display_name}}')" style="text-decoration: none"><i class="fa fa-edit"></i></a>&nbsp; - &nbsp; {% if agent.last_online %}{% if agent.is_online() %}<img src="{{ url_for('webui.static', filename='images/online.png') }}" alt="Online" height="25" width="25">{%else%}{{agent.last_online.strftime('%Y/%m/%d %H:%M')}}{%endif%}{% endif %}</td>
+<script type="text/javascript">
+   function changeName(agentid, name) {
+                      var newname = prompt("New name", name);
+                      $.post("{{ url_for('webui.rename_agent') }}", {'newname': newname, 'id': agentid}, function() {window.location.reload();});
+                      }
+</script>

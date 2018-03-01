@@ -1,0 +1,140 @@
+{% with previous_page=url_for('webui.index'), title="Freeloader list" %}
+{% include "header.html" %}
+{% endwith %}
+<!-- ============================================================== -->
+<!-- End Topbar header -->
+<!-- ============================================================== -->
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+   <!-- Content Header (Page header) -->
+   <section class="content-header">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+      <!-- Categories: success (green), info (blue), warning (yellow), danger (red) -->
+      {% if messages %}
+      {% for category, message in messages %}
+      <div class="alert alert-{{ category }} alert-dismissible" role="alert">
+         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+         <!-- <strong>Title</strong> --> {{ message }}
+      </div>
+      {% endfor %}
+      {% endif %}
+      {% endwith %}
+      <h1>
+         Dashboard
+         <small>Version 1.0</small>
+      </h1>
+   </section>
+   <!-- Main content -->
+   <section class="content">      
+      <!-- /.row -->
+      <div class="row">
+         <div class="col-xs-12">
+            <div class="box">
+               <div class="box-header">
+                  <h3 class="box-title">Config</h3>                  
+               </div>
+               <!-- /.box-header -->
+               <!-- /.box-header -->
+            <!-- form start -->
+         <form class="form-horizontal" method="post" action="{{ url_for('webui.config_update') }}">            
+              <div class="box-body">
+               <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-2 control-label">Username</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name="username" value="{{users.username}}" id="username" placeholder="Username">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-2 control-label">Password</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name="password" value="{{users.password}}" id="password" placeholder="Password">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">Wallet</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name="wallet" value="{{users.wallet}}" id="wallet" placeholder="Wallet">
+                  </div>
+                </div> 
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">Alert Withdrawal USD</label>
+
+                  <div class="col-sm-10">
+                    <input type="number" class="form-control" name="value_scheduled" value="{{users.value_scheduled}}" id="value_scheduled" placeholder="Value Alert Withdrawal">
+                  </div>
+                </div>  
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">E-mail</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name="email" value="{{users.email}}" id="email" placeholder="E-mail">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">Password E-mail</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name="password_email" value="{{users.password_email}}" id="password_email" placeholder="Password E-mail">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">Smtp</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name="smtp" value="{{users.smtp}}" id="smtp" placeholder="Smtp">
+                  </div>
+                </div>  
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">Port</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name="port" value="{{users.port}}" id="port" placeholder="Port">
+                  </div>
+                </div>            
+              </div>
+              <!-- /.box-body -->
+              <div class="box-footer">
+                <a href="{{ url_for('webui.index') }}"><button type="button" class="btn btn-info pull-left">Back</button></a>                
+                <button type="submit" class="btn btn-success pull-right">Save</button>
+              </div>
+              <!-- /.box-footer -->
+            </form>
+          </div>
+          <!-- /.box -->
+               <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+         </div>
+      </div>
+      <!-- /.row -->
+   </section>
+   <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+<script>
+   $(document).ready(function () {
+     $("#ckbCheckAll").click(function () {
+         $(".botid").prop('checked', $(this).prop('checked'));
+     });
+   });      
+
+   function send_command(e) {
+     if(!$(".botid:checked").length){
+       alert('Please select at least one bot !');
+       return;
+     }
+     $(".botid:checked").each(function(){
+       
+     });     
+     return false;
+   }
+   
+   $(".alert").delay(4000).slideUp(200, function() {
+    $(this).alert('close');
+   });
+</script>
+
+{% include "footer.html" %}

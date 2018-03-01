@@ -1,0 +1,7 @@
+pypiwin32==219
+pyscreenshot==0.4.2
+wget==3.2
+WMI==1.4.9
+requests==2.18.4
+Pillow==5.0.0
+py2exe==0.9.2.2

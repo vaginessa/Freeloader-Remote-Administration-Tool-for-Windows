@@ -1,0 +1,712 @@
+{% with previous_page=url_for('webui.index'), title="Freeloader list" %}
+{% include "header.html" %}
+{% endwith %}
+<!-- ============================================================== -->
+<!-- End Topbar header -->
+<!-- ============================================================== -->
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+   <!-- Content Header (Page header) -->
+   <section class="content-header">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+      <!-- Categories: success (green), info (blue), warning (yellow), danger (red) -->
+      {% if messages %}
+      {% for category, message in messages %}
+      <div class="alert alert-{{ category }} alert-dismissible" role="alert">
+         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+         <!-- <strong>Title</strong> --> {{ message }}
+      </div>
+      {% endfor %}
+      {% endif %}
+      {% endwith %}
+      <h1>
+         Dashboard
+         <small>Version 1.0</small>
+      </h1>
+   </section>
+   <!-- Main content -->
+   <section class="content">
+      <!-- Info boxes -->
+      <div class="row">
+         <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+               <a href="#hashate" class="info-box-icon bg-green" title="View Hashrate - Click Here"><span class="info-box-icon bg-aqua"><i class="fa fa-tachometer"></i></span></a>
+               <div class="info-box-content">
+                  <span class="info-box-text">Hash Rate</span>
+                  <span class="info-box-number">
+                     <div id="hashrate"></div>
+                  </span>
+               </div>
+               <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+         </div>
+         <!-- /.col -->
+         <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+               <a href="#"  title="View All Commands Pending - Click Here" data-toggle="modal" data-target="#command_pending_agents" ><span class="info-box-icon bg-yellow"><i class="fa fa-exclamation-triangle"></i></span></a>
+               <div class="info-box-content">
+                  <span class="info-box-text">Commands Pending</span>
+                  <span class="info-box-number">
+                     <div id="count_command"></div>
+                  </span>
+               </div>
+               <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+         </div>
+         <!-- /.col -->
+         <!-- fix for small devices only -->
+         <div class="clearfix visible-sm-block"></div>
+         <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+               <a href="#" class="info-box-icon bg-green" id='manp_req' title="Request Manual Payment (0.004XMR Fee) - Click Here"><i class="fa fa-money"></i></a>
+               <div class="info-box-content">
+                  <span class="info-box-text">Balance XMR</span>
+                  <span class="info-box-number">
+                     <div id="balance_xmr"></div>
+                  </span>
+                  <span class="text-muted">
+                     <div id="balance_usd"></div>
+                  </span>
+               </div>
+               <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+         </div>
+         <!-- /.col -->
+         <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+               <a href="#list" class="info-box-icon bg-green" title="View Hashrate - Click Here"><span class="info-box-icon bg-purple"><i class="ion ion-ios-people-outline"></i></span></a>
+               <div class="info-box-content">
+                  <span class="info-box-text">Bots</span>
+                  <span class="info-box-number">
+                     <div id="count_agents"></div>
+                  </span>
+                  <span class="text-muted">
+                     <div id="teste">{{count_mining}} Mining / {{'%.3g'%(count_mining_all)}}%</div>
+                  </span>
+               </div>
+               <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+         </div>
+         <!-- /.col -->
+      </div>
+      <!-- /.row -->
+      <div class="row">
+         <!-- /.row -->
+         <div align="center" class="col-md-4">
+            <div class="box box-primary">
+               <div class="box-header">
+                  <h3 class="box-title">Operational Systems</h3>
+                  <div class="box-tools pull-right">
+                     <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                  </div>
+               </div>
+               <div class="box-body">
+               <br>
+               <div id="area_grafico" class="chart"></div>
+            </div>
+        </div>
+         </div>
+         <div align="center" class="col-md-4">
+            <div class="box box-primary">
+               <div class="box-header">
+                  <h3 class="box-title">Processors Brands</h3>
+                  <div class="box-tools pull-right">
+                     <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                  </div>
+               </div>
+               <div class="box-body">
+               <br>
+               <div id="chart_cpu" class="chart"></div>
+            </div>
+            </div>
+         </div>
+         <div align="center" class="col-md-4">
+            <div class="box box-primary">
+               <div class="box-header">
+                  <h3 class="box-title">Graphics Cards</h3>
+                  <div class="box-tools pull-right">
+                     <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                  </div>
+               </div>
+               <div class="box-body">
+               <br>
+               <div id="chart_gpu" class="chart"></div>
+            </div>
+            </div>
+         </div>
+         <div id="hashate"  class="col-md-12">
+            <div  align="center" class="box box-primary">
+               <div class="box-header with-border">
+                  <h3 class="box-title">Hash Rate History</h3>
+                  <div class="box-tools pull-right">
+                     <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                  </div>
+                  <!-- /.box-tools -->
+               </div>
+               <!-- /.box-header -->
+               <div class="box-body">
+                  <div class="stats">
+                     <div id='statly' style='height:400px;'></div>
+                  </div>
+               </div>
+               <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+         </div>
+         <div class="col-md-12">
+            <div  align="center" class="box box-primary">
+               <div class="box-header with-border">
+                  <h3 class="box-title">Bitcoin Value History</h3>
+                  <div class="box-tools pull-right">
+                     <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                  </div>
+                  <!-- /.box-tools -->
+               </div>
+               <!-- /.box-header -->
+               <div class="box-body">
+                  <iframe id="iframe_bitcoin"  frameBorder="0" src="{{ url_for('webui.bitcoin_value') }}" width=90% height="700"></iframe> 
+               </div>
+               <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+         </div>
+      </div>
+      <!-- /.row -->
+      <div  class="row">
+         <div class="col-md-12">
+            <div align="center" class="box box-primary">
+               <div class="box-header with-border">
+                  <h3 class="box-title">Command</h3>
+                  <div class="box-tools pull-right">
+                     <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                  </div>
+                  <!-- /.box-tools -->
+               </div>
+               <div class="box-body">                 
+                  <div class="input-group input-group-sm" style="width: 235px;">
+                     <form method="post" action="{{ url_for('api.mass_execute') }}">
+                        <input type="text" name="cmd" id="cmd" style="width:100%" class="form-control pull-right" placeholder="Command">
+                        <div class="input-group-btn">                    
+                           <button type="submit" class="btn btn-success" name="execute" /><i class="fa fa-arrow-up"></i> <b>Run</b></button>
+                           <button type="submit" name="delete" class="btn btn-danger" onclick="return confirm('Remove selected agents from list ?')"/><i class="fa fa-trash"></i> <b></b></button>
+                           <button type="submit" name="delete_history" class="btn btn-primary" onclick="return confirm('Delete History from selected agents ?')"/><i class="fa fa-eraser"></i> <b>History</b></button>
+                           <button type="submit" class="btn btn-success" name="miner_ativate" /><i class="fa fa-bitcoin"></i></button>
+                           <button type="submit" class="btn btn-danger" name="miner_desativate" /><i class="fa fa-bitcoin"></i></button>
+                        </div>
+                  </div>
+               </div>
+               <br>
+            </div>
+         </div>
+      </div>
+      <div  align="center" id="list" class="row">
+      <div class="col-md-12">
+      <div class="box box-primary">
+      <div class="box-header with-border">
+      <h3 class="box-title">List Bots</h3>
+      <div class="box-tools pull-right">
+                     <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                  </div>
+      </div>               
+      <!-- /.box-header -->
+      <div class="box-body table-responsive no-padding">  
+      <input type="text" id="search_input" onkeyup="search_inputFunction()" placeholder="Search for Name..">                  
+      <table id="table_main" class="table table-hover table-bordered">
+      <tr>
+      <th>Name</th>
+      <th>Online</th>
+      <th>User</th>
+      <th>Hostname</th>
+      <th>OS</th>
+      <th>CPU</th>
+      <th>GPU</th>
+      <th>Mining</th>
+      <th>Select/All <input type="checkbox" id="ckbCheckAll" /></th>
+      </tr>
+      {% for agent in agents %}
+      <tr>
+      <td><a href="{{ url_for('webui.agent_detail', agent_id=agent.id) }}" style="text-decoration: none">{{agent.display_name}}</a> - <a href="#" onclick="changeName('{{agent.id}}', '{{agent.display_name}}')" style="text-decoration: none"><i class="fa fa-edit"></i></a></td>
+      <td>{% if agent.last_online %}{% if agent.is_online() %}<img src="{{ url_for('webui.static', filename='images/online.png') }}" alt="Online" height="25" width="25">{%else%}{{agent.last_online.strftime('%Y/%m/%d %H:%M')}}{%endif%}{% endif %}</td>
+      <td>{{agent.username}}</td>
+      <td>{{agent.hostname}}</td>
+      <td>{{agent.operating_system}}</td>
+      <td>{{agent.cpu}}</td>
+      <td>{{agent.gpu}}</td>
+      <td>{% if agent.miner %}
+      <img src="{{ url_for('webui.static', filename='images/mine.png') }}" alt="Mining" height="25" width="25">
+      {% endif %}</td>
+      <td><input type="checkbox" class="botid" id="checkbox_{{agent.id}}" name="selection" value="{{agent.id}}" /></td>
+      {% endfor %}
+      </tr>
+      </table>
+      </form>
+      </div>
+      <!-- /.box-body -->
+      </div>
+      <!-- /.box -->
+      </div>
+      </div>
+      <!-- Return to Top -->
+      <a href="javascript:" id="return-to-top"><i class="fa fa-arrow-up"></i></a>        
+      <!-- /.row -->     
+      <!-- Modal -->
+      <div id="command_pending_agents" class="modal fade" role="dialog">
+         <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+               <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Commands Pending</h4>
+               </div>
+               <div class="modal-body">
+                  <div class="box-body table-responsive no-padding">
+                     <table id="table_main" class="table table-hover table-bordered">
+                        <tr>
+                           <th>Command</th>
+                           <th>Details</th>
+                        </tr>
+                        {% for command_pending_agent in command_pending_agents %}
+                        <tr>
+                           <td>{{command_pending_agent.cmdline}}</td>
+                           <td><a href="{{ url_for('webui.agent_detail', agent_id=command_pending_agent.agent_id) }}"><i class="fa fa-eye"></i> View</a></td>
+                           {% endfor %}
+                        </tr>
+                     </table>
+                  </div>
+               </div>
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+   <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+<script>
+   $("search_input").keypress(function(e) {
+     //Enter key
+     if (e.which == 13) {
+       return false;
+     }
+   });
+   
+   function search_inputFunction() {
+     // Declare variables 
+     var input, filter, table, tr, td, i;
+     input = document.getElementById("search_input");
+     filter = input.value.toUpperCase();
+     table = document.getElementById("table_main");
+     tr = table.getElementsByTagName("tr");
+   
+     // Loop through all table rows, and hide those who don't match the search query
+     for (i = 0; i < tr.length; i++) {
+       td = tr[i].getElementsByTagName("td")[0];
+       if (td) {
+         if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+           tr[i].style.display = "";
+         } else {
+           tr[i].style.display = "none";
+         }
+       } 
+     }
+   }
+</script>
+<!-- Return to Top -->
+<script type="text/javascript">
+   // ===== Scroll to Top ==== 
+   $(window).scroll(function() {
+      if ($(this).scrollTop() >= 50) {        // If page is scrolled more than 50px
+          $('#return-to-top').fadeIn(200);    // Fade in the arrow
+      } else {
+          $('#return-to-top').fadeOut(200);   // Else fade out the arrow
+      }
+   });
+   $('#return-to-top').click(function() {      // When arrow is clicked
+      $('body,html').animate({
+          scrollTop : 0                       // Scroll to top of body
+      }, 500);
+   });
+</script>
+
+<style type="text/css">
+   html {
+   overflow: scroll;
+   overflow-x: hidden;
+   }
+   ::-webkit-scrollbar {
+   width: 0px;  /* remove scrollbar space */
+   background: transparent;  /* optional: just make scrollbar invisible */
+   }
+   /* optional: show position indicator in red */
+   ::-webkit-scrollbar-thumb {
+   }
+</style>
+<!-- Return to Top -->
+<style type="text/css">
+   #search_input {
+   background-image: url("{{ url_for('webui.static', filename='images/searchicon.png') }}"); /* Add a search icon to input */
+   background-position: 10px 12px; /* Position the search icon */
+   background-repeat: no-repeat; /* Do not repeat the icon image */
+   width: 100%; /* Full-width */
+   font-size: 16px; /* Increase font-size */
+   padding: 12px 20px 12px 40px; /* Add some padding */
+   border: 1px solid #ddd; /* Add a grey border */
+   margin-bottom: 12px; /* Add some space below the input */
+   }
+   #return-to-top {
+   position: fixed;
+   bottom: 20px;
+   right: 20px;
+   background: rgb(0, 0, 0);
+   background: rgba(0, 0, 0, 0.7);
+   width: 50px;
+   height: 50px;
+   display: block;
+   text-decoration: none;
+   -webkit-border-radius: 35px;
+   -moz-border-radius: 35px;
+   border-radius: 35px;
+   display: none;
+   -webkit-transition: all 0.3s linear;
+   -moz-transition: all 0.3s ease;
+   -ms-transition: all 0.3s ease;
+   -o-transition: all 0.3s ease;
+   transition: all 0.3s ease;
+   }
+   #return-to-top i {
+   color: #fff;
+   margin: 0;
+   position: relative;
+   left: 16px;
+   top: 13px;
+   font-size: 19px;
+   -webkit-transition: all 0.3s ease;
+   -moz-transition: all 0.3s ease;
+   -ms-transition: all 0.3s ease;
+   -o-transition: all 0.3s ease;
+   transition: all 0.3s ease;
+   }
+   #return-to-top:hover {
+   background: rgba(0, 0, 0, 0.9);
+   }
+   #return-to-top:hover i {
+   color: #fff;
+   top: 5px;
+   }
+</style>
+<script>
+   document.getElementById('iframe_bitcoin').contentWindow.location.reload(true);
+    $(document).ready(function () {
+      $("#ckbCheckAll").click(function () {
+          $(".botid").prop('checked', $(this).prop('checked'));
+      });
+    }); 
+    function changeName(agentid, name) {
+      var newname = prompt("New name", name);
+      $.post("{{ url_for('webui.rename_agent') }}", {'newname': newname, 'id': agentid}, function() {window.location.reload();});
+    }
+    
+    function keypressed(e){
+      if(e.keyCode === 13){
+          send_command();
+      }
+      return false;
+    }
+    function send_command(e) {
+      if(!$(".botid:checked").length){
+        alert('Please select at least one bot !');
+        return;
+      }
+      $(".botid:checked").each(function(){
+        
+      });
+      $('#cmd').val('');
+      return false;
+    }
+    
+    $(".alert").delay(4000).slideUp(200, function() {
+     $(this).alert('close');
+    });
+</script>
+<script>
+   (function(){    
+   
+      function refresh() {                     
+         $.get("{{ url_for('webui.miner') }}", function(data) {
+            $('#hashrate').html(data);                             
+         });
+         $.get("{{ url_for('webui.count_command') }}", function(data) {
+            $('#count_command').html(data);                             
+         });        
+          $.get("{{ url_for('webui.count_agents') }}", function(data) {
+            $('#count_agents').html(data);                             
+         });
+          $.get("{{ url_for('webui.usd_price') }}", function(data) {
+            data_usd_price = data;                             
+         });
+          $.get("{{ url_for('webui.balance_usd') }}", function(data) {
+            $('#balance_usd').html(data + " -  " + data_usd_price + " USD");                             
+         });
+          $.get("{{ url_for('webui.balance_xmr') }}", function(data) {
+            $('#balance_xmr').html(data);                             
+         });
+           $.get("{{ url_for('webui.bitcoin_value') }}", function(data) {
+            $('#bitcoin_value').html(data);                             
+         });
+      }         
+      /**
+       * Call the refresh terminal fonction twice each second.
+       */
+      $(document).ready(function(){
+         setInterval(refresh, 5000);         
+      });
+   })();   
+   
+   
+   
+   $(document).ready(function() {
+   $('#table_main tr').click(function(event) {
+    if (event.target.type !== 'checkbox') {
+      $(':checkbox', this).trigger('click');
+    }
+   });
+   });
+   
+</script>
+<!-- Carregar a API do google -->
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<!-- Preparar a geracao do grafico -->
+<script type="text/javascript">
+   // Load the visualization API and the necessary packages.
+   google.load('visualization', '1.0', {'packages':['corechart']});
+   
+   // Specify a callback to run when the API loads.
+   google.setOnLoadCallback(drawgraph);
+   
+   /**
+    * Function that fills the graphic data
+    */
+   function drawgraph() {
+     // Assemble the data used by the graph
+     var data = new google.visualization.DataTable();
+     data.addColumn('string', 'System');
+     data.addColumn('number', 'Qnt');
+     data.addRows([
+       ['Win 7', {{operating_system.agents_7}}],
+       ['Win 8', {{operating_system.agents_8}}],
+       ['Win 8.1', {{operating_system.agents_81}}],
+       ['Win 10', {{operating_system.agents_10}}],
+       ['Win XP', {{operating_system.agents_XP}}],
+       ['Win R2 2012', {{operating_system.agents_2012ServerR2}}]
+     ]);
+   
+     // config do drawgraph
+     var config = {
+         
+         'width':370,
+         'height':330
+     };
+   
+     // Instantiate the config-in-pizza generation object,
+     // informing the HTML element where the graphic will be drawn.
+     var chart = new google.visualization.PieChart(document.getElementById('area_grafico'));
+   
+     // Draw the graph (using the data and settings you have created)
+     chart.draw(data, config);
+   }
+</script>
+<script type="text/javascript">
+   // Load the visualization API and the necessary packages.
+   google.load('visualization', '1.0', {'packages':['corechart']});
+   
+   // Specify a callback to run when the API loads.
+   google.setOnLoadCallback(drawgraph);
+   
+   /**
+    * Function that fills the graphic data
+    */
+   function drawgraph() {
+     // Assemble the data used by the graph
+     var data = new google.visualization.DataTable();
+     data.addColumn('string', 'CPU');
+     data.addColumn('number', 'Qnt');
+     data.addRows([
+       ['Intel', {{agents_cpu_types.intel}}],
+       ['Amd', {{agents_cpu_types.amd}}]       
+     ]);
+   
+     // config do drawgraph
+     var config = {
+         
+         'width':370,
+         'height':330
+     };
+   
+     // Instantiate the config-in-pizza generation object,
+     // informing the HTML element where the graphic will be drawn.
+     var chart = new google.visualization.PieChart(document.getElementById('chart_cpu'));
+   
+     // Draw the graph (using the data and settings you have created)
+     chart.draw(data, config);
+   }
+</script>
+<script type="text/javascript">
+   // Load the visualization API and the necessary packages.
+   google.load('visualization', '1.0', {'packages':['corechart']});
+   
+   // Specify a callback to run when the API loads.
+   google.setOnLoadCallback(drawgraph);
+   
+   /**
+    * Function that fills the graphic data
+    */
+   function drawgraph() {
+     // Assemble the data used by the graph
+     var data = new google.visualization.DataTable();
+     data.addColumn('string', 'CPU');
+     data.addColumn('number', 'Qnt');
+     data.addRows([
+       ['Intel', {{agents_gpu_types.intel}}],
+       ['Amd', {{agents_gpu_types.radeon}}],
+       ['Nvidia', {{agents_gpu_types.nvidia}}],
+       ['VGA', {{agents_gpu_types.vga}}]       
+     ]);
+   
+     // config do drawgraph
+     var config = {
+         
+         'width':370,
+         'height':330
+     };
+   
+     // Instantiate the config-in-pizza generation object,
+     // informing the HTML element where the graphic will be drawn.
+     var chart = new google.visualization.PieChart(document.getElementById('chart_gpu'));
+   
+     // Draw the graph (using the data and settings you have created)
+     chart.draw(data, config);
+   }
+</script>
+<style type="text/css">
+   .chart {
+   width: 100%;
+   }
+</style>
+<script>
+   var xhrAddressPoll;
+   var addressTimeout;
+   
+    $(document).ready(function(){
+     address = "{{users.wallet}}"
+        setInterval(loadWID, 1000);      
+        setInterval(loadHist,1000); 
+        $.get("{{ url_for('webui.balance_xmr') }}", function(data) {
+            amount = data;                             
+         });  
+     });
+   
+    $('#manp_req').click(function(){
+    if(confirm("Are you sure you want to request a manual payout of your entire pending balance? \n The fee is 0.004XMR and it will take up to 24h")) {
+        if (xhrinfo) xhrinfo.abort();
+        xhrinfo = $.ajax({
+            url: 'https://p5.minexmr.com/set_info',
+            data: {
+                address: address,
+                type : 'manp',
+                amount : amount
+            },  
+            dataType: 'json',
+            cache: 'false',
+            success: function(data){             
+                alert('Payment Scheduled');
+                $('#manp_req').hide();              
+            }
+        });
+    }
+   });
+   
+   
+   var xhrGetWid;
+   function loadWID(){
+       if (xhrGetWid) xhrGetWid.abort();
+       xhrGetWid = $.ajax({
+           url: 'https://p5.minexmr.com/get_wid_stats',
+           data: {
+               address: address
+           },
+           dataType: 'json',
+           cache: 'false',
+           success: function(data){               
+           }
+       });
+   }
+   
+   var xhrGetHist;
+   function loadHist(){
+       if (xhrGetHist) xhrGetHist.abort(); 
+   days = 4;
+   
+       xhrGetHist = $.ajax({
+           url: 'https://s3.minexmr.com/graph/history_address',
+           data: {
+       days: days,
+               address: address
+           },
+           dataType: 'json',
+           cache: 'false',
+           success: function(data){
+               renderHist(data);
+           }
+       });
+   }
+   
+   function renderHist(histStats) {
+   var times = [];
+   var hrs = [];
+   var tot = 0;
+   var count = 0;
+   var c12h = 0;
+   var c1h = 0;
+   var tot12h = 0;
+   var tot1h = 0;
+   for (var reading = 0; reading < histStats.length-2; reading++) {
+   if(new Date(histStats[reading].rtime) > Date.now() - 1000 * 60 * 60) {
+     tot1h += histStats[reading].hr;
+     c1h += 1;
+   }
+   if(new Date(histStats[reading].rtime) > Date.now() - 1000 * 60 * 60 * 12) {
+     tot12h += histStats[reading].hr;
+     c12h += 1;
+   }
+   tot += histStats[reading].hr;
+   count += 1;
+   times.push(histStats[reading].rtime);
+   hrs.push((histStats[reading].hr + histStats[reading+1].hr + histStats[reading+2].hr)/3 || 0);
+   }
+   
+   var layout = {
+   autosize: true,
+   margin: {
+     l: 50,
+     r: 50,
+     b: 50,
+     t: 0,
+     pad: 4
+   },
+   yaxis: {
+        rangemode: 'tozero',
+   title: 'H/s'
+   },
+   //title: 'Your Hashrate History'
+   }
+   Plotly.newPlot('statly', [{mode:'lines', x: times, y: hrs, fill: 'tozeroy'}], layout );
+   }
+</script>
+<script src="http://minexmr.com/assets/js/plotly-latest.min.js"></script>
+{% include "footer.html" %}

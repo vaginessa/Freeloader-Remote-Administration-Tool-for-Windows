@@ -1,0 +1,68 @@
+    <link rel="stylesheet" href="https://blockchain.info/Resources/css/blockchain.css?">
+    <link rel="stylesheet" type="text/css" href="https://blockchain.info/Resources//css/markets/markets.css?" media="all">    
+    <style type="text/css"> .adv{display: none;} .basic{display: inherit;} </style></head><body class="opaque-nav" data-admin=""><div hidden="" id="configuration_json">{"offline_config":false,"blockchain_stats_url":"https:\/\/blockchain.info\/","debug_config":false,"service_price_url":"https:\/\/api.blockchain.info\/price\/","base_url":"https:\/\/blockchain.info\/markets","feed_url":"https:\/\/api.blockchain.info\/bci-ads\/","ZB_Input":{"quote":"USD","exchange":"bitstamp","exch_list":["bitstamp","bitfinex"],"modules":["ticker","network","news","chart"],"base":"BTC"},"data_url":"https:\/\/blockchain.info\/markets\/data"}</div>
+
+    <script src="https://blockchain.info/Resources//js/markets/pusher.min.js?"></script>
+    <script type="text/javascript" src="https://blockchain.info/Resources//js/markets/jquery.min.js?"></script>
+    <script type="text/javascript" src="https://blockchain.info/Resources//js/markets/jquery-ui.min.js?"></script>
+    <script type="text/javascript" src="https://blockchain.info/Resources//js/markets/dictionary.js?"></script>
+    <script type="text/javascript" src="https://blockchain.info/Resources//js/markets/currency.js?"></script>
+    <script type="text/javascript" src="https://blockchain.info/Resources//js/markets/colors.js?"></script>
+    <script type="text/javascript" src="https://blockchain.info/Resources//js/markets/exchanges.js?"></script>
+    <script type="text/javascript" src="https://blockchain.info/Resources//js/markets/zeroblock.js?"></script>
+    <script type="text/javascript" src="https://blockchain.info/Resources//js/markets/settings.js?"></script>
+    <script type="text/javascript" src="https://blockchain.info/Resources//js/markets/data.js?"></script>
+    <script type="text/javascript" src="https://blockchain.info/Resources//js/markets/indicator.class.js?"></script>
+    <script type="text/javascript" src="https://blockchain.info/Resources//js/markets/chart.class.js?"></script>
+    <script type="text/javascript" src="https://blockchain.info/Resources//js/markets/network.class.js?"></script>
+    <script type="text/javascript" src="https://blockchain.info/Resources//js/markets/news.class.js?"></script>
+    <script type="text/javascript" src="https://blockchain.info/Resources//js/markets/ticker.class.js?"></script>
+    <script type="text/javascript" src="https://blockchain.info/Resources//js/markets/platform.js?"></script>
+    <script type="text/javascript" src="https://blockchain.info/Resources//js/markets/main-dashboard.js?"></script>
+
+
+
+
+
+
+<div id="content"> 
+    <div id="market" class="markets_container_12 section markets_clearfix" style="height: 610px;">
+        <div id="ticker-box" class="grid_4">
+            <div class="markets_clearfix" id="main-ticker">
+                <h1 class="left" id="big-price">$9,717.19</h1>
+                <div class="right r" id="active-ticker">
+                    <div class="change">
+                        <span id="top-arrow"><span class="arrow-wrap"><span class="arrow arr-down"></span></span></span>
+                        <span id="top-change" class="down">-3.93%</span>
+                    </div>
+                    <div class="exch" id="top-exchange">Bitstamp</div>
+                </div>
+            </div>
+            <div id="cur-select" class="markets_clearfix">
+                <div class="left markets_label">Currency</div>
+                <div class="right" id="currency">USD&thinsp;–&thinsp;United&nbsp;States&nbsp;dollar</div>
+            </div>
+            <div id="exch-select">
+                <table>
+                    <colgroup>
+                        <col class="exchange">
+                        <col class="price">
+                        <col class="arrow">
+                        <col class="change">
+                    </colgroup>
+                    <tbody><tr class="exch-bitfinex" data-exch="bitfinex"><td>Bitfinex</td><td class="r price">9697.90</td><td class="r arrow"><span class="arrow-wrap"><span class="arrow arr-down"></span></span></td><td class="r change down">-3.79%</td></tr><tr class="exch-bitstamp active" data-exch="bitstamp"><td>Bitstamp</td><td class="r price">9717.19</td><td class="r arrow"><span class="arrow-wrap"><span class="arrow arr-down"></span></span></td><td class="r change down">-3.93%</td></tr></tbody>
+                </table>
+            </div>            
+        </div>
+
+        <div id="chart-box" class="grid_8" style="width: 466px;">
+            <div id="chart-header" class="markets_clearfix">
+                <h2 class="left" id="chart-label">Bitstamp BTC/USD, 1 day bars</h2>
+                <div class="right" id="chart-settings">Settings</div>
+            </div>
+            <div id="chart" class="chart" style="width: 466px; height: 530px;"><canvas width="466" height="530" z-index="100" style="width: 466px; height: 530px;"></canvas><canvas width="466" height="530" z-index="101" style="width: 466px; height: 530px;"></canvas><canvas width="466" height="530" z-index="102" style="width: 466px; height: 530px;"></canvas><canvas width="466" height="530" z-index="103" style="width: 466px; height: 530px;"></canvas><canvas width="466" height="530" z-index="105" style="width: 466px; height: 530px;"></canvas><canvas width="466" height="530" z-index="106" style="width: 466px; height: 530px; cursor: none;"></canvas></div>
+        </div>
+    </div>
+</div>
+    
+

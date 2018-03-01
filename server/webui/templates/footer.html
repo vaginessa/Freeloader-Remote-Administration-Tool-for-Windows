@@ -1,0 +1,67 @@
+<!-- Modal -->
+<div id="credits" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Credits</h4>
+      </div>
+      <div class="modal-body">        
+        <img src="{{ url_for('webui.static', filename='images/logo.png') }}" alt="KRATOS S.A" height=100% width=100%>
+         <strong>Copyright &copy; 2018 KRATOS S.A </strong>All rights
+    reserved. - This system is for studies only.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<script>
+   (function(){    
+   
+      function refresh() { 
+         $.get("{{ url_for('webui.count_command') }}", function(data) {
+            $('#count_command_alert').html(data);                             
+         });
+      }         
+      /**
+       * Call the refresh terminal fonction twice each second.
+       */
+      $(document).ready(function(){
+         setInterval(refresh, 1000);         
+      });
+   })();   
+</script>
+
+  <footer class="main-footer">
+    <div class="pull-right hidden-xs">
+      <b>Version</b> 1.0.0
+    </div>
+    <strong>Copyright &copy; 2018 <a href="#" data-toggle="modal" data-target="#credits" alt="Credits - KRATOS S.A">KRATOS S.A</a> </strong>All rights
+    reserved - This system is for studies only.
+  </footer>
+
+
+      
+
+  <!-- /.control-sidebar -->
+  <!-- Add the sidebar's background. This div must be placed
+       immediately after the control sidebar -->
+  <div class="control-sidebar-bg"></div>
+
+</div>
+<!-- ./wrapper -->
+<!-- Bootstrap 3.3.7 -->
+<script src="{{ url_for('webui.static', filename='bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+<!-- AdminLTE App -->
+<script src="{{ url_for('webui.static', filename='dist/js/adminlte.min.js') }}"></script>
+</body>
+</html>
+
+    
