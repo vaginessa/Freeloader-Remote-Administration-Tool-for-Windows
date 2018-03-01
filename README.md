@@ -58,7 +58,7 @@ Building a client
 Screenshots
 ---
 <div class="container">
-    <img src="https://i.imgur.com/AuGuPrQ.png" height="400" width="400" />    
+    <img src="https://i.imgur.com/AuGuPrQ.png" height="400" width="500" />    
 </div>
  
 ToDo
