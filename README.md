@@ -58,27 +58,9 @@ Building a client
 Screenshots
 ---
 <div class="container">
-    <img src="https://i.imgur.com/AuGuPrQ.png" height="200" width="200" />    
-  </div>
-  <div class="container">
-    <img class="middle-img" src="https://i.imgur.com/DNQCQN8.png"/ height="200" width="200" />    
-  </div>
-  <div class="container">
-    <img src="https://i.imgur.com/SLB5TBi.png" height="200" width="200" />    
- </div>
- <div class="container">
-    <img src="https://i.imgur.com/q1N7pRe.png" height="200" width="200" />    
- </div>
- <div class="container">
-    <img src="https://i.imgur.com/8UlPVHq.png" height="200" width="200" />    
- </div>
+    <img src="https://i.imgur.com/AuGuPrQ.png" height="400" width="400" />    
+</div>
  
- ```css
-    div.container {
-      display:inline-block;
-    }
-  ```
-
 ToDo
 ---
 * [Open Issues](https://github.com/sl4ureano/Freeloader-Remote-Administration-Tool-for-Windows/issues)
