@@ -4,7 +4,7 @@ import string
 
 class Config:
     SECRET_KEY = ''.join(random.choice(string.ascii_letters + string.digits) for i in range(60))
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:@localhost/python' #change to your db
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:@localhost/freeloader' #change to your db
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     UPLOAD_FOLDER = 'uploads'
 
