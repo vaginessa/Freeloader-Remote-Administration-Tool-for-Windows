@@ -55,6 +55,29 @@ Building a client
 * Open the project in your favorite editor and set your configs in file client/config.py.
 * Now run the file client/compile-py2exe.bat
 
+Screenshots
+---
+<div class="container">
+    <img src="https://i.imgur.com/AuGuPrQ.png" height="200" width="200" />    
+  </div>
+  <div class="container">
+    <img class="middle-img" src="https://i.imgur.com/DNQCQN8.png"/ height="200" width="200" />    
+  </div>
+  <div class="container">
+    <img src="https://i.imgur.com/SLB5TBi.png" height="200" width="200" />    
+ </div>
+ <div class="container">
+    <img src="https://i.imgur.com/q1N7pRe.png" height="200" width="200" />    
+ </div>
+ <div class="container">
+    <img src="https://i.imgur.com/8UlPVHq.png" height="200" width="200" />    
+ </div>
+ 
+ <style>
+    div.container {
+      display:inline-block;
+    }
+  </style>
 
 ToDo
 ---
