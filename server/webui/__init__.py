@@ -165,7 +165,14 @@ def credentials_del():
         flash('Deleted %s credentials' % len(selection),'danger')    
     return redirect(url_for('webui.credentials'))
 
-
+@webui.route('/del_commands', methods=['POST'])
+@auth.login_required
+def del_commands():        
+    if 'delete' in request.form:
+        db.session.query(Command).delete()
+        db.session.commit()
+        flash('Deleted with Successfully','danger')    
+    return redirect(url_for('webui.index'))
 
 @webui.route('/agents_operating_system')
 def agents_operating_system():

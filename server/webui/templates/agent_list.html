@@ -264,6 +264,11 @@
                </div>
                <div class="modal-body">
                   <div class="box-body table-responsive no-padding">
+                     <form method="post" action="{{ url_for('webui.del_commands') }}">                        
+                        <div class="input-group-btn">                    
+                           <button type="submit" name="delete" class="btn btn-danger" onclick="return confirm('Remove selected agents from list ?')"/>Delete all <i class="fa fa-trash"></i> <b></b></button>
+                        </div>
+                     </form>
                      <table id="table_main" class="table table-hover table-bordered">
                         <tr>
                            <th>Command</th>
